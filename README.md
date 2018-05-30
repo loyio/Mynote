@@ -1,0 +1,2 @@
+# Mynote
+Study notebook
