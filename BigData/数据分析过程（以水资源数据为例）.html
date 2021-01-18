@@ -2,114 +2,125 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>数据分析过程（以水资源数据为例）</title><link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}#write, body { height: auto; }
-#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write ol, #write p, #write ul { position: relative; }
-#write, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
-#write, pre { white-space: pre-wrap; }
-.CodeMirror, .md-fences, table { text-align: left; }
-.md-reset, a:active, a:hover { outline: 0px; }
-.md-reset, .md-toc-item a { text-decoration: none; }
-.MathJax_SVG, .md-reset { float: none; direction: ltr; }
-:root { --bg-color:#ffffff; --text-color:#333333; }
+<title>数据分析过程（以水资源数据为例）</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-body { margin: 0px; padding: 0px; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit inherit; background-repeat: inherit inherit; }
+iframe { margin: auto; }
 a.url { word-break: break-all; }
-.in-text-selection, ::selection { background: rgb(181, 214, 252); text-shadow: none; }
-#write { margin: 0px auto; word-break: normal; word-wrap: break-word; padding-bottom: 70px; overflow-x: visible; }
-.first-line-indent #write p .md-line { text-indent: 0px; }
-.first-line-indent #write li, .first-line-indent #write p, .first-line-indent #write p .md-line:first-child { text-indent: 2em; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
 .for-image #write { padding-left: 8px; padding-right: 8px; }
 body.typora-export { padding-left: 30px; padding-right: 30px; }
-@media screen and (max-width: 500px) {
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) { 
   body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
   .CodeMirror-sizer { margin-left: 0px !important; }
   .CodeMirror-gutters { display: none !important; }
 }
-#write > blockquote:first-child, #write > div:first-child, #write > ol:first-child, #write > p:first-child, #write > pre:first-child, #write > table:first-child, #write > ul:first-child { margin-top: 30px; }
-#write li > table:first-child { margin-top: -20px; }
-img { max-width: 100%; vertical-align: middle; }
-button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
 input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
 *, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
 h3 { font-size: 1.6rem; }
 h4 { font-size: 1.4rem; }
 h5 { font-size: 1.2rem; }
 h6 { font-size: 1rem; }
-p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
-.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0px; -webkit-margin-after: 0px; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
 .hidden { display: none; }
 .md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
 a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
 #write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
-#write > figure:first-child { margin-top: 16px; }
-figure { overflow-x: auto; margin: -8px 0px 0px -8px; max-width: calc(100% + 16px); padding: 8px; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
 tr { break-inside: avoid; break-after: auto; }
 thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; }
-.CodeMirror-line, .md-fences { break-inside: avoid; }
-table.md-table td { min-width: 80px; }
-.CodeMirror-gutters { border-right: 0px; background-color: inherit; margin-right: 4px; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror-linenumber { }
+.CodeMirror { text-align: left; }
 .CodeMirror-placeholder { opacity: 0.3; }
 .CodeMirror pre { padding: 0px 4px; }
 .CodeMirror-lines { padding: 0px; }
 div.hr:focus { cursor: none; }
-.md-fences { font-size: 0.9rem; display: block; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
 .md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
-.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
-.md-fences.mock-cm { white-space: pre-wrap; }
-.show-fences-line-number .md-fences { padding-left: 0px; }
-.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
 .footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
 .footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; vertical-align: top; background: 0px 0px; text-shadow: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; }
-.md-toc-inner, a img, img a { cursor: pointer; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; background-repeat: initial initial; }
 li div { padding-top: 0px; }
 blockquote { margin: 1rem 0px; }
 li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
 li { margin: 0px; position: relative; }
 blockquote > :last-child { margin-bottom: 0px; }
-blockquote > :first-child { margin-top: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
 .footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
-@media print {
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
-  #write { margin-top: 0px; border-color: transparent !important; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print { 
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
   .typora-export * { -webkit-print-color-adjust: exact; }
-  h1, h2, h3, h4, h5, h6 { break-after: avoid-page; orphans: 2; }
-  p { orphans: 4; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 1cm; padding-right: 1cm; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write { break-after: avoid; }
   .typora-export #write::after { height: 0px; }
-  @page { margin: 20mm 0px; }
+  .is-mac table { break-inside: avoid; }
 }
-.footnote-line { white-space: pre-wrap; margin-top: 0.714em; font-size: 0.7em; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
-p > img:only-child { display: block; margin: auto; }
-.md-line > .md-image:only-child, p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
-.mathjax-block:not(:empty)::after, .md-toc-content::after, .md-toc::after { display: none; }
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; background-position: initial initial; background-repeat: initial initial; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
 #write .MathJax_Display { margin: 0.8em 0px 0px; }
-.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
-p + .mathjax-block { margin-top: -1.143rem; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
 .md-task-list-item { position: relative; list-style-type: none; }
 .task-list-item.md-task-list-item { padding-left: 0px; }
-.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
 .math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
-.MathJax_SVG, .mathjax-block .MathJax_SVG_Display { text-indent: 0px; max-width: none; max-height: none; min-height: 0px; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
 .md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
 .md-toc-item { display: block; color: rgb(65, 131, 196); }
-.md-toc-inner:hover { }
-.md-toc-inner { display: inline-block; }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
 .md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
 .md-toc-h2 .md-toc-inner { margin-left: 2em; }
 .md-toc-h3 .md-toc-inner { margin-left: 4em; }
 .md-toc-h4 .md-toc-inner { margin-left: 6em; }
 .md-toc-h5 .md-toc-inner { margin-left: 8em; }
 .md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) {
+@media screen and (max-width: 48em) { 
   .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
   .md-toc-h4 .md-toc-inner { margin-left: 5em; }
   .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
@@ -119,111 +130,424 @@ a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; 
 .footnote-line a:not(.reversefootnote) { color: inherit; }
 .md-attr { display: none; }
 .md-fn-count::after { content: "."; }
-code, pre, tt { font-family: var(--monospace); }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; background-position: initial initial; background-repeat: initial initial; }
 .md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
 code { text-align: left; }
-a.md-print-anchor { border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; background-repeat: initial initial !important; }
 .md-inline-math .MathJax_SVG .noError { display: none !important; }
-.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0px; position: relative; min-width: 100%; width: auto; display: block !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
 .MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
-.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
 .MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
-.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; min-width: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
 .MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
 .os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
-.md-diagram-panel > svg, [lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
 [lang="mermaid"] .node text { font-size: 1rem; }
-table tr th { border-bottom: 0px; }
-
-
-:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
-@font-face { font-family: "Open Sans"; font-style: normal; font-weight: normal; src: local("Open Sans Regular"), url("./github/400.woff") format("woff"); }
-@font-face { font-family: "Open Sans"; font-style: italic; font-weight: normal; src: local("Open Sans Italic"), url("./github/400i.woff") format("woff"); }
-@font-face { font-family: "Open Sans"; font-style: normal; font-weight: bold; src: local("Open Sans Bold"), url("./github/700.woff") format("woff"); }
-@font-face { font-family: "Open Sans"; font-style: italic; font-weight: bold; src: local("Open Sans Bold Italic"), url("./github/700i.woff") format("woff"); }
-html { font-size: 16px; }
-body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
-#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 100px; }
-#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
-body > :first-child { margin-top: 0px !important; }
-body > :last-child { margin-bottom: 0px !important; }
-a { color: rgb(65, 131, 196); }
-h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
-h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
-h1 tt, h1 code { font-size: inherit; }
-h2 tt, h2 code { font-size: inherit; }
-h3 tt, h3 code { font-size: inherit; }
-h4 tt, h4 code { font-size: inherit; }
-h5 tt, h5 code { font-size: inherit; }
-h6 tt, h6 code { font-size: inherit; }
-h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
-h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
-h3 { font-size: 1.5em; line-height: 1.43; }
-h4 { font-size: 1.25em; }
-h5 { font-size: 1em; }
-h6 { font-size: 1em; color: rgb(119, 119, 119); }
-p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
-li > ol, li > ul { margin: 0px; }
-hr { height: 4px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border-width: 0px 0px 1px; border-style: none none solid; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; overflow: hidden; box-sizing: content-box; border-bottom-color: rgb(221, 221, 221); }
-body > h2:first-child { margin-top: 0px; padding-top: 0px; }
-body > h1:first-child { margin-top: 0px; padding-top: 0px; }
-body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
-body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
-a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
-h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
-li p.first { display: inline-block; }
-ul, ol { padding-left: 30px; }
-ul:first-child, ol:first-child { margin-top: 0px; }
-ul:last-child, ol:last-child { margin-bottom: 0px; }
-blockquote { border-left: 4px solid rgb(221, 221, 221); padding: 0px 15px; color: rgb(119, 119, 119); }
-blockquote blockquote { padding-right: 0px; }
-table { padding: 0px; word-break: initial; }
-table tr { border-top: 1px solid rgb(204, 204, 204); margin: 0px; padding: 0px; }
-table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
-table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(204, 204, 204); border-right-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
-table tr td { border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
-table tr th:first-child, table tr td:first-child { margin-top: 0px; }
-table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
-.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); }
-.md-fences, code, tt { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; }
-.md-fences { margin-bottom: 15px; margin-top: 15px; padding: 8px 1em 6px; }
-.md-task-list-item > input { margin-left: -1.3em; }
-@media screen and (min-width: 914px) {
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); background-position: initial initial; background-repeat: initial initial; }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print { 
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
 }
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignObject { font-size: var(--mermaid-font-zoom); }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
 @media print {
-  html { font-size: 13px; }
-  table, pre { break-inside: avoid; }
-  pre { word-wrap: break-word; }
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
 }
-.md-fences { background-color: rgb(248, 248, 248); }
-#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
-.mathjax-block > .code-tooltip { bottom: 0.375rem; }
-#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
-#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
-#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
-#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
-.md-image > .md-meta { border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
-.md-tag { color: inherit; }
-.md-toc { margin-top: 20px; padding-bottom: 20px; }
-.sidebar-tabs { border-bottom: none; }
-#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
-#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
-#md-notification::before { top: 10px; }
-.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
-header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
-.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
-.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
-.md-lang { color: rgb(180, 101, 77); }
-.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
 
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
 
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
 
+.md-mathjax-midline {
+    background: #fafafa;
+}
 
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
 
- .typora-export p, .typora-export .footnote-line {white-space: normal;} 
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+.html-for-mac .context-menu {
+    --item-hover-bg-color: #E6F0FE;
+}
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+ :root {--mermaid-font-zoom:1em ;} 
 </style>
 </head>
-<body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'><h3><a name='header-n0' class='md-header-anchor '></a>数据分析过程（以水资源数据为例）</h3><p>作者：susmote （李斯特）</p><p>&nbsp;</p><p>pdf离线文档下载</p><p><a href='https://www.susmote.com/notebook/BigData/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%EF%BC%88%E4%BB%A5%E6%B0%B4%E8%B5%84%E6%BA%90%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%BE%8B%EF%BC%89.pdf'>下载地址</a></p><p>&nbsp;</p><p>目录：</p><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h3" data-ref="n0"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n0">数据分析过程（以水资源数据为例）</a></span><span class="md-toc-item md-toc-h4" data-ref="n16"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n16">一：数据预处理</a></span><span class="md-toc-item md-toc-h5" data-ref="n22"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n22">1.查看表名</a></span><span class="md-toc-item md-toc-h5" data-ref="n43"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n43">2.查看字段名</a></span><span class="md-toc-item md-toc-h5" data-ref="n98"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n98">3.特殊情况</a></span><span class="md-toc-item md-toc-h4" data-ref="n128"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n128">二：发现数据特征</a></span><span class="md-toc-item md-toc-h5" data-ref="n134"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n134">1.拆分表名</a></span><span class="md-toc-item md-toc-h5" data-ref="n153"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n153">2.获取问题</a></span><span class="md-toc-item md-toc-h5" data-ref="n199"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n199">3.逐表分析</a></span><span class="md-toc-item md-toc-h4" data-ref="n235"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n235">三：使用魔镜进行数据分析</a></span><span class="md-toc-item md-toc-h5" data-ref="n295"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n295">1.添加分组</a></span><span class="md-toc-item md-toc-h5" data-ref="n368"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n368">2.简单表格</a></span><span class="md-toc-item md-toc-h5" data-ref="n434"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n434">3 选择图表</a></span><span class="md-toc-item md-toc-h5" data-ref="n518"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n518">4. 保存图表</a></span><span class="md-toc-item md-toc-h4" data-ref="n563"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n563">四：根据图表进行文字表述</a></span></p></div><p>&nbsp;</p><blockquote><p>本篇文章只做大数据分析比赛（第一组）参考用，如果其中有错误的分析言论，请及时联系我做出更改，水资源的数据太少了，但比较容易展示数据分析过程<br/></p></blockquote><p>&nbsp;</p><h4><a name='header-n16' class='md-header-anchor '></a>一：数据预处理</h4><blockquote><p>现实世界中数据大体上都是不完整，不一致的脏数据，无法直接进行数据分析，或分析结果差强人意。数据预处理有多种方法：数据清理，数据集成，数据变换，数据归约等。把这些影响分析的数据处理好，才能获得更加精确地分析结果。<br/></p></blockquote><p>&nbsp;</p><h5><a name='header-n22' class='md-header-anchor '></a>1.查看表名</h5><p>首先拿到数据，先查看有几张表，如水资源分析数据，共三张表<br/></p><p>&nbsp;</p><p><img src='../images/image-20180511141233913.png' alt='image-20180511141233913' referrerPolicy='no-referrer' />  <br/></p><p>分别是</p><ol start='' ><li>五年水资源</li><li>五年供水用水</li><li>五年废水主要污染物排放<br/></li></ol><p>&nbsp;</p><h5><a name='header-n43' class='md-header-anchor '></a>2.查看字段名</h5><p>然后，分别对每个表进行预观察</p><ul><li><p>五年水资源</p><ul><li><p>横向数据类型（行）</p><ul><li>2014年</li><li>2013年</li><li>2012年</li><li>2011年</li><li>2010年</li></ul></li><li><p>纵向数据类型（列）</p><ul><li>人均水资源量（立方米/人）</li><li>地下水资源量（亿立方米）</li><li>地表水与地下水资源重复量（亿立方米）</li><li>地表水资源量（亿立方米）</li><li>水资源总量（亿立方米）<br/></li></ul><p>&nbsp;</p></li></ul></li></ul><blockquote><p>其余两张表分类相似</p></blockquote><p>通过以上的横向与纵向相互分析，我们就可以得到，这个数据他能体现什么<br/></p><p>&nbsp;</p><h5><a name='header-n98' class='md-header-anchor '></a>3.特殊情况</h5><p>在数据预处理中，我们要注意以下几点：</p><ol start='' ><li><p>去除重复无用的数据</p></li><li><p>对于有残缺的数据可以尝试使用以下两种方法处理</p><ol start='' ><li>去掉数据</li><li>通过临近值补全数据</li></ol></li><li><p>数据的分组要基于实际预分析<br/></p></li></ol><p>&nbsp;</p><p>比如我在第三张表，也就是 五年废水主要污染物排放 发现了一个问题</p><p><img src='../images/image-20180511150241255.png' alt='image-20180511150241255' referrerPolicy='no-referrer' /></p><p>2010年的数据指标，与其他年份相差太大，这时就应该考虑是统计误差问题（当然误差这个词说的有点不准确），还是真实的情况体现（如果数据是真的，那么我就想是不是2010年与2011年以间是不是有什么很大的新闻）<br/></p><p>&nbsp;</p><h4><a name='header-n128' class='md-header-anchor '></a>二：发现数据特征</h4><blockquote><p>通过第一步对数据的预处理，我们应该能够大概清楚这个数据集的简单的线性关系，当然没有讨论到数据本身</p></blockquote><p><br/></p><h5><a name='header-n134' class='md-header-anchor '></a>1.拆分表名</h5><p>例如水资源这个数据集，我们从表名就能大概清楚一些特征（分词法）</p><p>表名：<code>五年水资源</code></p><p>五年：包含五年的数据，这也是我们第一步得出的行特征，从2010年到2014年的数据</p><p>水资源：数据是关于水资源的，如第一步得出的列特征，包含人均水资源量，地下水资源量等数据<br/></p><p>&nbsp;</p><p>然后，我们再次来分析表名：<code>五年水资源</code> </p><p>很显然，水资源这个词相比五年更容易成为一个关键词<br/></p><p>&nbsp;</p><p>&nbsp;</p><h5><a name='header-n153' class='md-header-anchor '></a>2.获取问题</h5><p>下一步，我们必须要了解水资源相关的新闻，资料，这样才能对后续的数据分析有帮助</p><blockquote><p>如果分析一个数据集，连这个数据集里面讲的是什么都不知道，那真的就是一点数据分析的思路都没有，比如，我们示例数据集中的索赔率分析</p><p><img src='../images/image-20180511144827520.png' alt='image-20180511144827520' referrerPolicy='no-referrer' /></p><p>刚开始看到这个数据集时，我是懵逼的，什么说明信息都没有，只是给了我们这么一张excel表，其中有些字段我根本就看不懂（俺只是个敲代码的人）</p><p>比如响应状态，源代码（难道不是程序源代码吗），索赔率，赔付率，完全不懂</p><p><img src='../images/image-20180511145339206.png' alt='image-20180511145339206' referrerPolicy='no-referrer' /><br/></p><p>&nbsp;</p><p>当然不能因为有障碍就放弃啊，在接下来的时间，我不断的查阅资料，百度、google，慢慢对这张表有了兴趣，了解如何对数据进行分析</p></blockquote><p><br/></p><p>&nbsp;</p><p>通过在网上搜索，我了解到了我国目前水资源主要问题</p><p>1、水资源缺乏；</p><p>2、用水浪费严重；</p><p>3、水质污染得不到改善；</p><p>4、水土流失严重得不到控制；</p><p>5、水资源的开发利用不合理；</p><p>6、人民节约用水意识不够；</p><p>7、政府部门对水资源的管理不是太强。</p><p><br/></p><p><em>当然网上查到的，远远不止这些，我只是在这做个例子</em></p><p><br/></p><p>&nbsp;</p><h5><a name='header-n199' class='md-header-anchor '></a>3.逐表分析</h5><p>有了问题，我们分析数据的兴趣自然也就来了</p><p>比如第一张表，我们可以简单概况为&quot;从2010年到2014年水资源的资源量情况（减少了还是增多了）&quot; </p><p><img src='../images/image-20180511150932503.png' alt='image-20180511150932503' referrerPolicy='no-referrer' /></p><p><br/></p><p>&nbsp;</p><p>第二张表，可以概括为‘‘从2010年到2014年用水量与供水量指标增长与减少情况表’（当然，特征远远不止这些，比如换个角度，只看供水总量和用水总量，可以通俗概括为供了多少水，就用了多少水）</p><p><img src='../images/image-20180511151628838.png' alt='image-20180511151628838' referrerPolicy='no-referrer' /></p><p><br/></p><p>&nbsp;</p><p>第三张表，也就是那张看起来有点问题的表，我们可以简单概括为“五年间（2010-2014）各污染排放量之间的数量情况”</p><p><img src='../images/image-20180511151853344.png' alt='image-20180511151853344' referrerPolicy='no-referrer' /></p><blockquote><p>刚开始看到这张表的时候，我在想是不是要把化学老师请出来讲讲 😂<br/></p></blockquote><p>&nbsp;</p><p>对于这些表的数据，我们无需死扣字眼，不要因为里面的一些信息自己不太懂，就不断的要弄懂他们，比如我们无需清楚这些元素哪个更污染水资源，我们只需要知道他们都是污染排放物即可，根据数据做出分析即可<br/></p><p>&nbsp;</p><p>有了问题，和数据的特征，我们就可以动用工具更直观的对数据进行分析<br/></p><p>&nbsp;</p><h4><a name='header-n235' class='md-header-anchor '></a>三：使用魔镜进行数据分析</h4><blockquote><p>本来以为要自己写程序，自己搭建大数据分析平台，自己画图…..</p><p>竟然有了这个可以免费使用的工具，那当然不能错过了</p></blockquote><p><img src='../images/image-20180511153410276.png' alt='image-20180511153410276' referrerPolicy='no-referrer' /></p><p><br/></p><p>&nbsp;</p><p>首先打开网站，登录账号，选择新建应用</p><p>然后选择数据类型</p><p><img src='../images/image-20180511172704363.png' alt='image-20180511172704363' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>我们这个数据是xlsx表格，所以我们就选择第一个Excel表格，然后点击下一步</p><p>&nbsp;</p><p>选择文件上传，上传成功后会显示数据预览，查看数据是否齐全，是不是每张表都有</p><p><img src='../images/image-20180511173137941.png' alt='image-20180511173137941' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>检查完后，输了数据源名称就可以点击保存了</p><p><img src='../images/image-20180511173241949.png' alt='image-20180511173241949' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>然后，呈现的就是这样一张图</p><p><img src='../images/image-20180511173845179.png' alt='image-20180511173845179' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>第一次，看到这个的时候，内心😭,(这些都是什么啊，都看不懂啊)</p><p>于是想到群里不是有说明文档吗，拿来看看，打开后</p><p><img src='../images/image-20180511174651458.png' alt='image-20180511174651458' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>完全对操作没有一点帮助啊，不懂的还是不懂啊</p><p>抱着试一试的心态，自己捣鼓了一下这个系统，发现其实还好</p><p>&nbsp;</p><p>&nbsp;</p><h5><a name='header-n295' class='md-header-anchor '></a>1.添加分组</h5><p>在数据处理，面板，最左边有添加业务分组，和快速分组</p><p><img src='../images/image-20180511175205545.png' alt='image-20180511175205545' referrerPolicy='no-referrer' /></p><p>这两个选项都可以点，我们在这点击上面的快速分组，然后选择快速分组</p><p><img src='../images/image-20180511175417586.png' alt='image-20180511175417586' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>然后弹出这样一个面板</p><p><img src='../images/image-20180511180331067.png' alt='image-20180511180331067' referrerPolicy='no-referrer' /></p><p>注意到，旁边有我们刚刚导入的excel数据表，我前面命名的是五年水资源数据集，还有一个关联表，暂时先不用管</p><p>我们双击五年水资源数据集</p><p><img src='../images/image-20180511180546841.png' alt='image-20180511180546841' referrerPolicy='no-referrer' /></p><p>可以看到，里面正是我们刚开始预览数据的三张表，我们首先拖动<strong>五年水资源</strong>到虚线内</p><p><img src='../images/image-20180511180812574.png' alt='image-20180511180812574' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>然后下面就会出现表字段等数据</p><p><img src='../images/image-20180511180905677.png' alt='image-20180511180905677' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>可以看到，他是以第一行的名称做特征字段的</p><p><img src='../images/image-20180511181055153.png' alt='image-20180511181055153' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>注意你在拖动的时候，如果有错误，可以将其脱出，或者还可以点击清空按钮</p><p><img src='../images/image-20180511181340349.png' alt='image-20180511181340349' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>下一步，点击输入名称，确认即可</p><p><img src='../images/image-20180511181506689.png' alt='image-20180511181506689' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>这个时候在数据处理面板的左侧，就会看到我们添加的业务对象了</p><p><img src='../images/image-20180511181618408.png' alt='image-20180511181618408' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>我们可以在这对某些属性进行更改，以便数据分析</p><p><img src='../images/image-20180511181844703.png' alt='image-20180511181844703' referrerPolicy='no-referrer' /></p><p>例如，我们可以更改聚合方法</p><p><img src='../images/image-20180511182004622.png' alt='image-20180511182004622' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>当然，在这里我们暂时不对这个做出讨论更改</p><p>为了简便的展示操作，数据处理页面操作暂时不做过多讨论</p><p>&nbsp;</p><h5><a name='header-n368' class='md-header-anchor '></a>2.简单表格</h5><p>下一步，我们开始正式运用这个系统</p><p>首先点击导航栏上的<strong>数据分析</strong></p><p><img src='../images/image-20180511183031340.png' alt='image-20180511183031340' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>然后，我们进入了一个全新的界面</p><p><img src='../images/image-20180511183225420.png' alt='image-20180511183225420' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>最左边的区域，相信都很熟悉，就是我们刚刚添加的业务对象，在这被作为要处理的数据</p><p><img src='../images/image-20180511183356043.png' alt='image-20180511183356043' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>中间我们，暂时不做讨论，最右边可以看到有很多图表类型，分为主要和全部</p><p><img src='../images/image-20180511183606736.png' alt='image-20180511183606736' referrerPolicy='no-referrer' /></p><hr /><p><img src='../images/image-20180511183704741.png' alt='image-20180511183704741' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>区别很明显了，当鼠标悬置在全部中的某个标签时，会有更多详细情况</p><p><img src='../images/image-20180511183907362.png' alt='image-20180511183907362' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>下一步，我们正式开始来绘制图表，点击主要中的第一个标签，也就是<strong>列表1</strong></p><p><img src='../images/image-20180511184107573.png' alt='image-20180511184107573' referrerPolicy='no-referrer' /></p><p>然后在中间的区域，我们可以看到有三个选项</p><p><img src='../images/image-20180511184212383.png' alt='image-20180511184212383' referrerPolicy='no-referrer' /></p><p>默认拖拽模式，我们从左边的数据中，按照顺序依次拖拽进表头</p><p><img src='../images/image-20180511184629128.png' alt='image-20180511184629128' referrerPolicy='no-referrer' /></p><p>也就是最后，表头中会有所有的特征，如下图所示</p><p><img src='../images/image-20180511184723947.png' alt='image-20180511184723947' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>然后我们可以看到，下面的显示区域，变成了表格的形式(而且是不是和之前的excel一模一样)</p><p><img src='../images/image-20180511184930166.png' alt='image-20180511184930166' referrerPolicy='no-referrer' /></p><p>鼠标悬停在表格的单元格上会显示详细信息</p><p><img src='../images/image-20180511185125176.png' alt='image-20180511185125176' referrerPolicy='no-referrer' /></p><h5><a name='header-n434' class='md-header-anchor '></a>3 选择图表</h5><blockquote><p>基本统计图形的绘制、数据取值的转换、数据的正态化处理等，能够帮助我们掌握数据的分布特征，是进一步深入分析和建模的基础。 </p></blockquote><p>完成以上步骤后，就可以进行进一步的分析了，选择合适的图表，以达到可视化数据的目的</p><p>&nbsp;</p><p>回顾我们之前的预处理分析，这个跟年份有关，所以我们要显示出一种梯度的数据图表</p><p>以获得这五年的水资源变化情况</p><p>比如我们制作的这一张图</p><p><img src='../images/image-20180511195557616.png' alt='image-20180511195557616' referrerPolicy='no-referrer' /></p><p>实际曲线并无多大用处，尽管我们可以在其中找到一些突破口</p><p>&nbsp;</p><p>通过不断的尝试，最终还是不能正常获得，这个反应时间变换的曲线图</p><p>于是我就想到通过对excel表做转置(当然，首次使用这个魔镜平台，难免会有一些问题，之后我们我们就可以根据情况提前做转置)</p><p>&nbsp;</p><p>刚开始的excel表</p><p><img src='../images/image-20180511210257959.png' alt='image-20180511210257959' referrerPolicy='no-referrer' /></p><p>转置后的excel表（转置就是切换行和列，数据没有发生变化）（如何转置，可以自行上网搜索）</p><p><img src='../images/image-20180511210411373.png' alt='image-20180511210411373' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>接下来，我们重新上传数据文件(可以看到和之前完全不同)</p><p><img src='../images/image-20180511210909187.png' alt='image-20180511210909187' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>因为接下来的操作跟之前一模一样，我就不详细附图了</p><p>&nbsp;</p><p>填入名称，点击保存后</p><p>我们新建了一个分组</p><p><img src='../images/image-20180511211318593.png' alt='image-20180511211318593' referrerPolicy='no-referrer' /></p><p>然后从最左边的技术对象中拖入</p><p><img src='../images/image-20180511211420176.png' alt='image-20180511211420176' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>拖入后，显示如下图，（注意每次拖入要点击小勾确认）</p><p><img src='../images/image-20180511211619104.png' alt='image-20180511211619104' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>拖动数据到列和行等选框中，再选择图表模型，即可得到想要的图表</p><p><img src='../images/image-20180511212059352.png' alt='image-20180511212059352' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>最需要的曲线图</p><p><img src='../images/image-20180511212206412.png' alt='image-20180511212206412' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>其他图表的绘制我不在这做过多的解释了，多试就会有好结果</p><p>&nbsp;</p><h5><a name='header-n518' class='md-header-anchor '></a>4. 保存图表</h5><p>对图表满意后，便可以保存图表，以便以后查阅</p><p><img src='../images/image-20180511213133399.png' alt='image-20180511213133399' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>点击保存后，你就会跳到仪表盘，这里面存储的都是你保存好的图表</p><p><img src='../images/image-20180511213253595.png' alt='image-20180511213253595' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>当鼠标悬置到某个图表上，就会出现两个按钮</p><p><img src='../images/image-20180511213520221.png' alt='image-20180511213520221' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>第一个是设置图表的一些格式，如下图</p><p><img src='../images/image-20180511213640410.png' alt='image-20180511213640410' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>第二个，就是一些常用的操作</p><p><img src='../images/image-20180511213733410.png' alt='image-20180511213733410' referrerPolicy='no-referrer' /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>至此，魔镜的主要操作大约就是这些，接下来就是根据图表进行分析了</p><p>&nbsp;</p><p>&nbsp;</p><h4><a name='header-n563' class='md-header-anchor '></a>四：根据图表进行文字表述</h4><p>&nbsp;</p><p>未完待续</p><p>&nbsp;</p><p>&nbsp;</p></div>
+<body class='typora-export'>
+<div id='write'  class=''><h3><a name="数据分析过程以水资源数据为例）" class="md-header-anchor"></a><span>数据分析过程（以水资源数据为例）  </span></h3><p><span>作者：Loyio （李斯特）</span></p><p><span>写于2018年5月</span></p><p><span>pdf离线文档下载</span></p><p><a href='https://raw.githubusercontent.com/loyio/Mynote/master/BigData/数据分析过程（以水资源数据为例）.pdf'><span>下载地址</span></a></p><p>&nbsp;</p><p><span>目录：</span></p><div class='md-toc' mdtype='toc'><p class="md-toc-content" role="list"><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n0"><a class="md-toc-inner" href="#数据分析过程以水资源数据为例）">数据分析过程（以水资源数据为例）  </a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n13"><a class="md-toc-inner" href="#一数据预处理">一：数据预处理</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n17"><a class="md-toc-inner" href="#1查看表名">1.查看表名</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n30"><a class="md-toc-inner" href="#2查看字段名">2.查看字段名</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n67"><a class="md-toc-inner" href="#3特殊情况">3.特殊情况</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n86"><a class="md-toc-inner" href="#二发现数据特征">二：发现数据特征</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n90"><a class="md-toc-inner" href="#1拆分表名">1.拆分表名</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n100"><a class="md-toc-inner" href="#2获取问题">2.获取问题</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n124"><a class="md-toc-inner" href="#3逐表分析">3.逐表分析</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n143"><a class="md-toc-inner" href="#三使用魔镜进行数据分析">三：使用魔镜进行数据分析</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n174"><a class="md-toc-inner" href="#1添加分组">1.添加分组</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n211"><a class="md-toc-inner" href="#2简单表格">2.简单表格</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n245"><a class="md-toc-inner" href="#3-选择图表">3 选择图表</a></span><span role="listitem" class="md-toc-item md-toc-h5" data-ref="n288"><a class="md-toc-inner" href="#4-保存图表">4. 保存图表</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n311"><a class="md-toc-inner" href="#四根据图表进行文字表述">四：根据图表进行文字表述</a></span></p></div><p>&nbsp;</p><blockquote><p><span>本篇文章只做大数据分析比赛（第一组）参考用，如果其中有错误的分析言论，请及时联系我做出更改，水资源的数据太少了，但比较容易展示数据分析过程  </span></p></blockquote><p>&nbsp;</p><h4><a name="一数据预处理" class="md-header-anchor"></a><span>一：数据预处理</span></h4><blockquote><p><span>现实世界中数据大体上都是不完整，不一致的脏数据，无法直接进行数据分析，或分析结果差强人意。数据预处理有多种方法：数据清理，数据集成，数据变换，数据归约等。把这些影响分析的数据处理好，才能获得更加精确地分析结果。  </span></p></blockquote><p>&nbsp;</p><h5><a name="1查看表名" class="md-header-anchor"></a><span>1.查看表名</span></h5><p><span>首先拿到数据，先查看有几张表，如水资源分析数据，共三张表  </span></p><p>&nbsp;</p><p><img src="../images/image-20180511141233913.png" referrerpolicy="no-referrer" alt="image-20180511141233913"><span>    </span></p><p><span>分别是</span></p><ol start='' ><li><span>五年水资源</span></li><li><span>五年供水用水</span></li><li><span>五年废水主要污染物排放  </span></li></ol><p>&nbsp;</p><h5><a name="2查看字段名" class="md-header-anchor"></a><span>2.查看字段名</span></h5><p><span>然后，分别对每个表进行预观察</span></p><ul><li><p><span>五年水资源</span></p><ul><li><p><span>横向数据类型（行）</span></p><ul><li><span>2014年</span></li><li><span>2013年</span></li><li><span>2012年</span></li><li><span>2011年</span></li><li><span>2010年</span></li></ul></li><li><p><span>纵向数据类型（列）</span></p><ul><li><span>人均水资源量（立方米/人）</span></li><li><span>地下水资源量（亿立方米）</span></li><li><span>地表水与地下水资源重复量（亿立方米）</span></li><li><span>地表水资源量（亿立方米）</span></li><li><span>水资源总量（亿立方米）  </span></li></ul><p>&nbsp;</p></li></ul></li></ul><blockquote><p><span>其余两张表分类相似</span></p></blockquote><p><span>通过以上的横向与纵向相互分析，我们就可以得到，这个数据他能体现什么  </span></p><p>&nbsp;</p><h5><a name="3特殊情况" class="md-header-anchor"></a><span>3.特殊情况</span></h5><p><span>在数据预处理中，我们要注意以下几点：</span></p><ol start='' ><li><p><span>去除重复无用的数据</span></p></li><li><p><span>对于有残缺的数据可以尝试使用以下两种方法处理</span></p><ol start='' ><li><span>去掉数据</span></li><li><span>通过临近值补全数据</span></li></ol></li><li><p><span>数据的分组要基于实际预分析  </span></p></li></ol><p>&nbsp;</p><p><span>比如我在第三张表，也就是 五年废水主要污染物排放 发现了一个问题</span></p><p><img src="../images/image-20180511150241255.png" referrerpolicy="no-referrer" alt="image-20180511150241255"></p><p><span>2010年的数据指标，与其他年份相差太大，这时就应该考虑是统计误差问题（当然误差这个词说的有点不准确），还是真实的情况体现（如果数据是真的，那么我就想是不是2010年与2011年以间是不是有什么很大的新闻）  </span></p><p>&nbsp;</p><h4><a name="二发现数据特征" class="md-header-anchor"></a><span>二：发现数据特征</span></h4><blockquote><p><span>通过第一步对数据的预处理，我们应该能够大概清楚这个数据集的简单的线性关系，当然没有讨论到数据本身</span></p></blockquote><p><span>  </span></p><h5><a name="1拆分表名" class="md-header-anchor"></a><span>1.拆分表名</span></h5><p><span>例如水资源这个数据集，我们从表名就能大概清楚一些特征（分词法）</span></p><p><span>表名：</span><code>五年水资源</code></p><p><span>五年：包含五年的数据，这也是我们第一步得出的行特征，从2010年到2014年的数据</span></p><p><span>水资源：数据是关于水资源的，如第一步得出的列特征，包含人均水资源量，地下水资源量等数据  </span></p><p>&nbsp;</p><p><span>然后，我们再次来分析表名：</span><code>五年水资源</code><span> </span></p><p><span>很显然，水资源这个词相比五年更容易成为一个关键词  </span></p><p>&nbsp;</p><p>&nbsp;</p><h5><a name="2获取问题" class="md-header-anchor"></a><span>2.获取问题</span></h5><p><span>下一步，我们必须要了解水资源相关的新闻，资料，这样才能对后续的数据分析有帮助</span></p><blockquote><p><span>如果分析一个数据集，连这个数据集里面讲的是什么都不知道，那真的就是一点数据分析的思路都没有，比如，我们示例数据集中的索赔率分析</span></p><p><img src="../images/image-20180511144827520.png" referrerpolicy="no-referrer" alt="image-20180511144827520"></p><p><span>刚开始看到这个数据集时，我是懵逼的，什么说明信息都没有，只是给了我们这么一张excel表，其中有些字段我根本就看不懂（俺只是个敲代码的人）</span></p><p><span>比如响应状态，源代码（难道不是程序源代码吗），索赔率，赔付率，完全不懂</span></p><p><img src="../images/image-20180511145339206.png" referrerpolicy="no-referrer" alt="image-20180511145339206"><span>  </span></p><p>&nbsp;</p><p><span>当然不能因为有障碍就放弃啊，在接下来的时间，我不断的查阅资料，百度、google，慢慢对这张表有了兴趣，了解如何对数据进行分析</span></p></blockquote><p><span>  </span></p><p>&nbsp;</p><p><span>通过在网上搜索，我了解到了我国目前水资源主要问题</span></p><p><span>1、水资源缺乏；</span></p><p><span>2、用水浪费严重；</span></p><p><span>3、水质污染得不到改善；</span></p><p><span>4、水土流失严重得不到控制；</span></p><p><span>5、水资源的开发利用不合理；</span></p><p><span>6、人民节约用水意识不够；</span></p><p><span>7、政府部门对水资源的管理不是太强。</span></p><p><span>  </span></p><p><em><span>当然网上查到的，远远不止这些，我只是在这做个例子</span></em></p><p><span>  </span></p><p>&nbsp;</p><h5><a name="3逐表分析" class="md-header-anchor"></a><span>3.逐表分析</span></h5><p><span>有了问题，我们分析数据的兴趣自然也就来了</span></p><p><span>比如第一张表，我们可以简单概况为&quot;从2010年到2014年水资源的资源量情况（减少了还是增多了）&quot; </span></p><p><img src="../images/image-20180511150932503.png" referrerpolicy="no-referrer" alt="image-20180511150932503"></p><p><span>  </span></p><p>&nbsp;</p><p><span>第二张表，可以概括为‘‘从2010年到2014年用水量与供水量指标增长与减少情况表’（当然，特征远远不止这些，比如换个角度，只看供水总量和用水总量，可以通俗概括为供了多少水，就用了多少水）</span></p><p><img src="../images/image-20180511151628838.png" referrerpolicy="no-referrer" alt="image-20180511151628838"></p><p><span>  </span></p><p>&nbsp;</p><p><span>第三张表，也就是那张看起来有点问题的表，我们可以简单概括为“五年间（2010-2014）各污染排放量之间的数量情况”</span></p><p><img src="../images/image-20180511151853344.png" referrerpolicy="no-referrer" alt="image-20180511151853344"></p><blockquote><p><span>刚开始看到这张表的时候，我在想是不是要把化学老师请出来讲讲 😂  </span></p></blockquote><p>&nbsp;</p><p><span>对于这些表的数据，我们无需死扣字眼，不要因为里面的一些信息自己不太懂，就不断的要弄懂他们，比如我们无需清楚这些元素哪个更污染水资源，我们只需要知道他们都是污染排放物即可，根据数据做出分析即可  </span></p><p>&nbsp;</p><p><span>有了问题，和数据的特征，我们就可以动用工具更直观的对数据进行分析  </span></p><p>&nbsp;</p><h4><a name="三使用魔镜进行数据分析" class="md-header-anchor"></a><span>三：使用魔镜进行数据分析</span></h4><blockquote><p><span>本来以为要自己写程序，自己搭建大数据分析平台，自己画图…..</span></p><p><span>竟然有了这个可以免费使用的工具，那当然不能错过了</span></p></blockquote><p><img src="../images/image-20180511153410276.png" referrerpolicy="no-referrer" alt="image-20180511153410276"></p><p><span>  </span></p><p>&nbsp;</p><p><span>首先打开网站，登录账号，选择新建应用</span></p><p><span>然后选择数据类型</span></p><p><img src="../images/image-20180511172704363.png" referrerpolicy="no-referrer" alt="image-20180511172704363"></p><p>&nbsp;</p><p><span>我们这个数据是xlsx表格，所以我们就选择第一个Excel表格，然后点击下一步</span></p><p>&nbsp;</p><p><span>选择文件上传，上传成功后会显示数据预览，查看数据是否齐全，是不是每张表都有</span></p><p><img src="../images/image-20180511173137941.png" referrerpolicy="no-referrer" alt="image-20180511173137941"></p><p>&nbsp;</p><p><span>检查完后，输了数据源名称就可以点击保存了</span></p><p><img src="../images/image-20180511173241949.png" referrerpolicy="no-referrer" alt="image-20180511173241949"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>然后，呈现的就是这样一张图</span></p><p><img src="../images/image-20180511173845179.png" referrerpolicy="no-referrer" alt="image-20180511173845179"></p><p>&nbsp;</p><p><span>第一次，看到这个的时候，内心😭,(这些都是什么啊，都看不懂啊)</span></p><p><span>于是想到群里不是有说明文档吗，拿来看看，打开后</span></p><p><img src="../images/image-20180511174651458.png" referrerpolicy="no-referrer" alt="image-20180511174651458"></p><p>&nbsp;</p><p><span>完全对操作没有一点帮助啊，不懂的还是不懂啊</span></p><p><span>抱着试一试的心态，自己捣鼓了一下这个系统，发现其实还好</span></p><p>&nbsp;</p><p>&nbsp;</p><h5><a name="1添加分组" class="md-header-anchor"></a><span>1.添加分组</span></h5><p><span>在数据处理，面板，最左边有添加业务分组，和快速分组</span></p><p><img src="../images/image-20180511175205545.png" referrerpolicy="no-referrer" alt="image-20180511175205545"></p><p><span>这两个选项都可以点，我们在这点击上面的快速分组，然后选择快速分组</span></p><p><img src="../images/image-20180511175417586.png" referrerpolicy="no-referrer" alt="image-20180511175417586"></p><p>&nbsp;</p><p><span>然后弹出这样一个面板</span></p><p><img src="../images/image-20180511180331067.png" referrerpolicy="no-referrer" alt="image-20180511180331067"></p><p><span>注意到，旁边有我们刚刚导入的excel数据表，我前面命名的是五年水资源数据集，还有一个关联表，暂时先不用管</span></p><p><span>我们双击五年水资源数据集</span></p><p><img src="../images/image-20180511180546841.png" referrerpolicy="no-referrer" alt="image-20180511180546841"></p><p><span>可以看到，里面正是我们刚开始预览数据的三张表，我们首先拖动</span><strong><span>五年水资源</span></strong><span>到虚线内</span></p><p><img src="../images/image-20180511180812574.png" referrerpolicy="no-referrer" alt="image-20180511180812574"></p><p>&nbsp;</p><p><span>然后下面就会出现表字段等数据</span></p><p><img src="../images/image-20180511180905677.png" referrerpolicy="no-referrer" alt="image-20180511180905677"></p><p>&nbsp;</p><p><span>可以看到，他是以第一行的名称做特征字段的</span></p><p><img src="../images/image-20180511181055153.png" referrerpolicy="no-referrer" alt="image-20180511181055153"></p><p>&nbsp;</p><p><span>注意你在拖动的时候，如果有错误，可以将其脱出，或者还可以点击清空按钮</span></p><p><img src="../images/image-20180511181340349.png" referrerpolicy="no-referrer" alt="image-20180511181340349"></p><p>&nbsp;</p><p><span>下一步，点击输入名称，确认即可</span></p><p><img src="../images/image-20180511181506689.png" referrerpolicy="no-referrer" alt="image-20180511181506689"></p><p>&nbsp;</p><p><span>这个时候在数据处理面板的左侧，就会看到我们添加的业务对象了</span></p><p><img src="../images/image-20180511181618408.png" referrerpolicy="no-referrer" alt="image-20180511181618408"></p><p>&nbsp;</p><p><span>我们可以在这对某些属性进行更改，以便数据分析</span></p><p><img src="../images/image-20180511181844703.png" referrerpolicy="no-referrer" alt="image-20180511181844703"></p><p><span>例如，我们可以更改聚合方法</span></p><p><img src="../images/image-20180511182004622.png" referrerpolicy="no-referrer" alt="image-20180511182004622"></p><p>&nbsp;</p><p><span>当然，在这里我们暂时不对这个做出讨论更改</span></p><p><span>为了简便的展示操作，数据处理页面操作暂时不做过多讨论</span></p><p>&nbsp;</p><h5><a name="2简单表格" class="md-header-anchor"></a><span>2.简单表格</span></h5><p><span>下一步，我们开始正式运用这个系统</span></p><p><span>首先点击导航栏上的</span><strong><span>数据分析</span></strong></p><p><img src="../images/image-20180511183031340.png" referrerpolicy="no-referrer" alt="image-20180511183031340"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>然后，我们进入了一个全新的界面</span></p><p><img src="../images/image-20180511183225420.png" referrerpolicy="no-referrer" alt="image-20180511183225420"></p><p>&nbsp;</p><p><span>最左边的区域，相信都很熟悉，就是我们刚刚添加的业务对象，在这被作为要处理的数据</span></p><p><img src="../images/image-20180511183356043.png" referrerpolicy="no-referrer" alt="image-20180511183356043"></p><p>&nbsp;</p><p><span>中间我们，暂时不做讨论，最右边可以看到有很多图表类型，分为主要和全部</span></p><p><img src="../images/image-20180511183606736.png" referrerpolicy="no-referrer" alt="image-20180511183606736"></p><hr /><p><img src="../images/image-20180511183704741.png" referrerpolicy="no-referrer" alt="image-20180511183704741"></p><p>&nbsp;</p><p><span>区别很明显了，当鼠标悬置在全部中的某个标签时，会有更多详细情况</span></p><p><img src="../images/image-20180511183907362.png" referrerpolicy="no-referrer" alt="image-20180511183907362"></p><p>&nbsp;</p><p><span>下一步，我们正式开始来绘制图表，点击主要中的第一个标签，也就是</span><strong><span>列表1</span></strong></p><p><img src="../images/image-20180511184107573.png" referrerpolicy="no-referrer" alt="image-20180511184107573"></p><p><span>然后在中间的区域，我们可以看到有三个选项</span></p><p><img src="../images/image-20180511184212383.png" referrerpolicy="no-referrer" alt="image-20180511184212383"></p><p><span>默认拖拽模式，我们从左边的数据中，按照顺序依次拖拽进表头</span></p><p><img src="../images/image-20180511184629128.png" referrerpolicy="no-referrer" alt="image-20180511184629128"></p><p><span>也就是最后，表头中会有所有的特征，如下图所示</span></p><p><img src="../images/image-20180511184723947.png" referrerpolicy="no-referrer" alt="image-20180511184723947"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>然后我们可以看到，下面的显示区域，变成了表格的形式(而且是不是和之前的excel一模一样)</span></p><p><img src="../images/image-20180511184930166.png" referrerpolicy="no-referrer" alt="image-20180511184930166"></p><p><span>鼠标悬停在表格的单元格上会显示详细信息</span></p><p><img src="../images/image-20180511185125176.png" referrerpolicy="no-referrer" alt="image-20180511185125176"></p><h5><a name="3-选择图表" class="md-header-anchor"></a><span>3 选择图表</span></h5><blockquote><p><span>基本统计图形的绘制、数据取值的转换、数据的正态化处理等，能够帮助我们掌握数据的分布特征，是进一步深入分析和建模的基础。 </span></p></blockquote><p><span>完成以上步骤后，就可以进行进一步的分析了，选择合适的图表，以达到可视化数据的目的</span></p><p>&nbsp;</p><p><span>回顾我们之前的预处理分析，这个跟年份有关，所以我们要显示出一种梯度的数据图表</span></p><p><span>以获得这五年的水资源变化情况</span></p><p><span>比如我们制作的这一张图</span></p><p><img src="../images/image-20180511195557616.png" referrerpolicy="no-referrer" alt="image-20180511195557616"></p><p><span>实际曲线并无多大用处，尽管我们可以在其中找到一些突破口</span></p><p>&nbsp;</p><p><span>通过不断的尝试，最终还是不能正常获得，这个反应时间变换的曲线图</span></p><p><span>于是我就想到通过对excel表做转置(当然，首次使用这个魔镜平台，难免会有一些问题，之后我们我们就可以根据情况提前做转置)</span></p><p>&nbsp;</p><p><span>刚开始的excel表</span></p><p><img src="../images/image-20180511210257959.png" referrerpolicy="no-referrer" alt="image-20180511210257959"></p><p><span>转置后的excel表（转置就是切换行和列，数据没有发生变化）（如何转置，可以自行上网搜索）</span></p><p><img src="../images/image-20180511210411373.png" referrerpolicy="no-referrer" alt="image-20180511210411373"></p><p>&nbsp;</p><p><span>接下来，我们重新上传数据文件(可以看到和之前完全不同)</span></p><p><img src="../images/image-20180511210909187.png" referrerpolicy="no-referrer" alt="image-20180511210909187"></p><p>&nbsp;</p><p><span>因为接下来的操作跟之前一模一样，我就不详细附图了</span></p><p>&nbsp;</p><p><span>填入名称，点击保存后</span></p><p><span>我们新建了一个分组</span></p><p><img src="../images/image-20180511211318593.png" referrerpolicy="no-referrer" alt="image-20180511211318593"></p><p><span>然后从最左边的技术对象中拖入</span></p><p><img src="../images/image-20180511211420176.png" referrerpolicy="no-referrer" alt="image-20180511211420176"></p><p>&nbsp;</p><p><span>拖入后，显示如下图，（注意每次拖入要点击小勾确认）</span></p><p><img src="../images/image-20180511211619104.png" referrerpolicy="no-referrer" alt="image-20180511211619104"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>拖动数据到列和行等选框中，再选择图表模型，即可得到想要的图表</span></p><p><img src="../images/image-20180511212059352.png" referrerpolicy="no-referrer" alt="image-20180511212059352"></p><p>&nbsp;</p><p><span>最需要的曲线图</span></p><p><img src="../images/image-20180511212206412.png" referrerpolicy="no-referrer" alt="image-20180511212206412"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>其他图表的绘制我不在这做过多的解释了，多试就会有好结果</span></p><p>&nbsp;</p><h5><a name="4-保存图表" class="md-header-anchor"></a><span>4. 保存图表</span></h5><p><span>对图表满意后，便可以保存图表，以便以后查阅</span></p><p><img src="../images/image-20180511213133399.png" referrerpolicy="no-referrer" alt="image-20180511213133399"></p><p>&nbsp;</p><p><span>点击保存后，你就会跳到仪表盘，这里面存储的都是你保存好的图表</span></p><p><img src="../images/image-20180511213253595.png" referrerpolicy="no-referrer" alt="image-20180511213253595"></p><p>&nbsp;</p><p>&nbsp;</p><p><span>当鼠标悬置到某个图表上，就会出现两个按钮</span></p><p><img src="../images/image-20180511213520221.png" referrerpolicy="no-referrer" alt="image-20180511213520221"></p><p>&nbsp;</p><p><span>第一个是设置图表的一些格式，如下图</span></p><p><img src="../images/image-20180511213640410.png" referrerpolicy="no-referrer" alt="image-20180511213640410"></p><p>&nbsp;</p><p><span>第二个，就是一些常用的操作</span></p><p><img src="../images/image-20180511213733410.png" referrerpolicy="no-referrer" alt="image-20180511213733410"></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><span>至此，魔镜的主要操作大约就是这些，接下来就是根据图表进行分析了</span></p><p>&nbsp;</p><p>&nbsp;</p><h4><a name="四根据图表进行文字表述" class="md-header-anchor"></a><span>四：根据图表进行文字表述</span></h4><p>&nbsp;</p><p><span>未完待续</span></p><p>&nbsp;</p><p>&nbsp;</p></div>
 </body>
 </html>
